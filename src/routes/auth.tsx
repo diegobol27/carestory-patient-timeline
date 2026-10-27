@@ -55,7 +55,7 @@ function AuthPage() {
         const { error } = await supabase.auth.signUp({
           email: form.email,
           password: form.password,
-          options: { emailRedirectTo: window.location.origin + "/pacientes", data: { full_name: form.fullName } },
+          options: { emailRedirectTo: window.location.origin + "/auth", data: { full_name: form.fullName } },
         });
         if (error) throw error;
         toast.success("Revise su correo para confirmar la cuenta.");
