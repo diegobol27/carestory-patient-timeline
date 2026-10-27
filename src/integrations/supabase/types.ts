@@ -14,7 +14,191 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      encounters: {
+        Row: {
+          created_at: string
+          education: string | null
+          encounter_date: string
+          encounter_type: string | null
+          end_time: string | null
+          evolution: string | null
+          history: string | null
+          id: string
+          location: string | null
+          modality_address: string | null
+          objectives: string | null
+          observations: string | null
+          owner_id: string
+          patient_id: string
+          professional: string | null
+          provider_info: string | null
+          reason: string | null
+          referral: string | null
+          reps_services: string | null
+          services: string[]
+          start_time: string | null
+          systems_review: string | null
+          updated_at: string
+          vitals_final: Json
+          vitals_initial: Json
+        }
+        Insert: {
+          created_at?: string
+          education?: string | null
+          encounter_date?: string
+          encounter_type?: string | null
+          end_time?: string | null
+          evolution?: string | null
+          history?: string | null
+          id?: string
+          location?: string | null
+          modality_address?: string | null
+          objectives?: string | null
+          observations?: string | null
+          owner_id?: string
+          patient_id: string
+          professional?: string | null
+          provider_info?: string | null
+          reason?: string | null
+          referral?: string | null
+          reps_services?: string | null
+          services?: string[]
+          start_time?: string | null
+          systems_review?: string | null
+          updated_at?: string
+          vitals_final?: Json
+          vitals_initial?: Json
+        }
+        Update: {
+          created_at?: string
+          education?: string | null
+          encounter_date?: string
+          encounter_type?: string | null
+          end_time?: string | null
+          evolution?: string | null
+          history?: string | null
+          id?: string
+          location?: string | null
+          modality_address?: string | null
+          objectives?: string | null
+          observations?: string | null
+          owner_id?: string
+          patient_id?: string
+          professional?: string | null
+          provider_info?: string | null
+          reason?: string | null
+          referral?: string | null
+          reps_services?: string | null
+          services?: string[]
+          start_time?: string | null
+          systems_review?: string | null
+          updated_at?: string
+          vitals_final?: Json
+          vitals_initial?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "encounters_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      patients: {
+        Row: {
+          address: string | null
+          birth_date: string | null
+          created_at: string
+          doc_number: string | null
+          doc_type: string | null
+          doc_type_other: string | null
+          email: string | null
+          full_name: string
+          guardian_name: string | null
+          guardian_phone: string | null
+          guardian_relation: string | null
+          hc_number: string | null
+          id: string
+          insurer: string | null
+          municipality: string | null
+          owner_id: string
+          phone: string | null
+          sex: string | null
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          birth_date?: string | null
+          created_at?: string
+          doc_number?: string | null
+          doc_type?: string | null
+          doc_type_other?: string | null
+          email?: string | null
+          full_name: string
+          guardian_name?: string | null
+          guardian_phone?: string | null
+          guardian_relation?: string | null
+          hc_number?: string | null
+          id?: string
+          insurer?: string | null
+          municipality?: string | null
+          owner_id?: string
+          phone?: string | null
+          sex?: string | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          birth_date?: string | null
+          created_at?: string
+          doc_number?: string | null
+          doc_type?: string | null
+          doc_type_other?: string | null
+          email?: string | null
+          full_name?: string
+          guardian_name?: string | null
+          guardian_phone?: string | null
+          guardian_relation?: string | null
+          hc_number?: string | null
+          id?: string
+          insurer?: string | null
+          municipality?: string | null
+          owner_id?: string
+          phone?: string | null
+          sex?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          full_name: string | null
+          id: string
+          profession: string | null
+          registro: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          full_name?: string | null
+          id: string
+          profession?: string | null
+          registro?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          profession?: string | null
+          registro?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
