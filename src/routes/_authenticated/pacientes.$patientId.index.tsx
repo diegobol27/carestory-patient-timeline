@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
+import { usePatient, useEncounters } from "@/lib/queries";
 import { useState } from "react";
 import { toast } from "sonner";
 import { FilePlus2, Download, Pencil, ChevronRight } from "lucide-react";
@@ -12,33 +13,6 @@ export const Route = createFileRoute("/_authenticated/pacientes/$patientId/")({
   head: () => ({ meta: [{ title: "Historia del paciente · Historia Clínica Digital" }] }),
   component: PatientPage,
 });
-
-export function usePatient(patientId: string) {
-  return useQuery({
-    queryKey: ["patient", patientId],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("patients").select("*").eq("id", patientId).single();
-      if (error) throw error;
-      return data;
-    },
-  });
-}
-
-export function useEncounters(patientId: string) {
-  return useQuery({
-    queryKey: ["encounters", patientId],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("encounters")
-        .select("*")
-        .eq("patient_id", patientId)
-        .order("encounter_date", { ascending: false })
-        .order("created_at", { ascending: false });
-      if (error) throw error;
-      return data;
-    },
-  });
-}
 
 function PatientPage() {
   const { patientId } = Route.useParams();
@@ -74,10 +48,10 @@ function PatientPage() {
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
           <Button variant="secondary" onClick={newSession} disabled={busy}><FilePlus2 /> Nueva sesión / evolución</Button>
-          <Button asChild variant="outline" className="border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
+          <Button asChild variant="onBrand">
             <Link to="/pacientes/$patientId/imprimir" params={{ patientId }} search={{ atencion: undefined }}><Download /> Historia completa (PDF)</Link>
           </Button>
-          <Button variant="ghost" className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground" onClick={() => setEditing((e) => !e)}>
+          <Button variant="onBrand" onClick={() => setEditing((e) => !e)}>
             <Pencil /> {editing ? "Cerrar edición" : "Editar datos"}
           </Button>
         </div>
