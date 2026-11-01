@@ -24,7 +24,7 @@ function NewPatient() {
           setBusy(true);
           const { data, error } = await supabase.from("patients").insert(values).select().single();
           setBusy(false);
-          if (error) return toast.error(error.message);
+          if (error) { toast.error(error.message); return; }
           qc.invalidateQueries({ queryKey: ["patients"] });
           toast.success("Paciente guardado");
           navigate({ to: "/pacientes/$patientId", params: { patientId: data.id } });

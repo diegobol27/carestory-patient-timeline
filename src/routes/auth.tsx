@@ -44,7 +44,7 @@ function AuthPage() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     const parsed = schema.safeParse(form);
-    if (!parsed.success) return toast.error(parsed.error.issues[0].message);
+    if (!parsed.success) { toast.error(parsed.error.issues[0]?.message ?? "Datos inválidos"); return; }
     setLoading(true);
     try {
       if (mode === "in") {
@@ -70,7 +70,7 @@ function AuthPage() {
 
   async function google() {
     const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin + "/auth" });
-    if (result.error) return toast.error("No fue posible ingresar con Google");
+    if (result.error) { toast.error("No fue posible ingresar con Google"); return; }
     if (result.redirected) return;
     navigate({ to: "/pacientes" });
   }

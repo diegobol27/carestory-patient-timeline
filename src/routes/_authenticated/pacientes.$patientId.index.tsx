@@ -33,7 +33,7 @@ function PatientPage() {
       .select()
       .single();
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries({ queryKey: ["encounters", patientId] });
     navigate({ to: "/pacientes/$patientId/atencion/$encounterId", params: { patientId, encounterId: data.id } });
   }
@@ -49,7 +49,7 @@ function PatientPage() {
         <div className="mt-5 flex flex-wrap gap-2">
           <Button variant="secondary" onClick={newSession} disabled={busy}><FilePlus2 /> Nueva sesión / evolución</Button>
           <Button asChild variant="onBrand">
-            <Link to="/pacientes/$patientId/imprimir" params={{ patientId }} search={{ atencion: undefined }}><Download /> Historia completa (PDF)</Link>
+            <Link to="/pacientes/$patientId/imprimir" params={{ patientId }} search={{}}><Download /> Historia completa (PDF)</Link>
           </Button>
           <Button variant="onBrand" onClick={() => setEditing((e) => !e)}>
             <Pencil /> {editing ? "Cerrar edición" : "Editar datos"}
@@ -64,7 +64,7 @@ function PatientPage() {
             submitLabel="Actualizar datos"
             onSubmit={async (values) => {
               const { error } = await supabase.from("patients").update(values).eq("id", patientId);
-              if (error) return toast.error(error.message);
+              if (error) { toast.error(error.message); return; }
               qc.invalidateQueries({ queryKey: ["patient", patientId] });
               qc.invalidateQueries({ queryKey: ["patients"] });
               toast.success("Datos actualizados");
