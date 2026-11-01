@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
-import logo from "@/assets/logo.png.asset.json";
+import logo from "@/assets/logo.png";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -83,7 +83,7 @@ function AuthPage() {
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-10">
       <div className="w-full max-w-md rounded-2xl border bg-card p-8 shadow-card">
-        <img src={logo.url} alt="Servicios de Rehabilitación Cardio Pulmonar" className="mx-auto h-28 w-auto" />
+        <img src={logo} alt="Servicios de Rehabilitación Cardio Pulmonar" className="mx-auto h-28 w-auto" />
         <h1 className="mt-4 text-center text-xl font-semibold text-primary">
           {mode === "in" ? "Ingreso de profesionales" : "Crear cuenta de profesional"}
         </h1>

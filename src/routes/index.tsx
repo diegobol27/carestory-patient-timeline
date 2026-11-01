@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { FileHeart, Lock, Download, History } from "lucide-react";
-import logo from "@/assets/logo.png.asset.json";
+import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
@@ -27,7 +27,7 @@ function Index() {
   return (
     <div className="min-h-screen">
       <section className="mx-auto flex max-w-5xl flex-col items-center px-4 pt-14 pb-10 text-center">
-        <img src={logo.url} alt="Servicios de Rehabilitación Cardio Pulmonar" className="h-48 w-auto sm:h-60" />
+        <img src={logo} alt="Servicios de Rehabilitación Cardio Pulmonar" className="h-48 w-auto sm:h-60" />
         <h1 className="mt-6 text-3xl font-bold tracking-tight text-primary sm:text-5xl">Historia Clínica Digital</h1>
         <p className="mt-3 max-w-xl text-lg text-muted-foreground">
           Rehabilitación cardiopulmonar · Terapia respiratoria · Terapia física domiciliaria

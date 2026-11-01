@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Printer } from "lucide-react";
-import logo from "@/assets/logo.png.asset.json";
+import logo from "@/assets/logo.png";
 import { usePatient, useEncounters } from "@/lib/queries";
 import { DOC_CODE, VITAL_ROWS, asVitals, calcAge, formatDate, type Encounter } from "@/lib/clinical";
 import { Button } from "@/components/ui/button";
@@ -90,7 +90,7 @@ function PrintPage() {
       <p className="no-print mb-4 text-xs text-muted-foreground">En la ventana de impresión elija “Guardar como PDF” para entregar el archivo al paciente.</p>
       <article className="mx-auto max-w-4xl bg-card p-8 shadow-card print:p-0 print:shadow-none">
         <header className="flex items-center justify-between gap-4 border-b-4 border-secondary pb-3">
-          <img src={logo.url} alt="Servicios de Rehabilitación Cardio Pulmonar" className="h-24 w-auto" />
+          <img src={logo} alt="Servicios de Rehabilitación Cardio Pulmonar" className="h-24 w-auto" />
           <div className="text-right">
             <h1 className="text-xl font-bold text-primary">HISTORIA CLÍNICA DIGITAL</h1>
             <p className="text-xs text-secondary">Rehabilitación cardiopulmonar • Terapia respiratoria • Terapia física</p>
