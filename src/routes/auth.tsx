@@ -4,7 +4,6 @@ import { toast } from "sonner";
 import { z } from "zod";
 import logo from "@/assets/logo.png.asset.json";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -69,10 +68,16 @@ function AuthPage() {
   }
 
   async function google() {
-    const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin + "/auth" });
-    if (result.error) { toast.error("No fue posible ingresar con Google"); return; }
-    if (result.redirected) return;
-    navigate({ to: "/pacientes" });
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin + "/auth",
+      },
+    });
+
+    if (error) {
+      toast.error("No fue posible ingresar con Google");
+    }
   }
 
   return (
