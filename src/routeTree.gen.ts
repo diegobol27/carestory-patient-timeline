@@ -15,6 +15,8 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedPacientesIndexRouteImport } from './routes/_authenticated/pacientes.index'
 import { Route as AuthenticatedPacientesNuevoRouteImport } from './routes/_authenticated/pacientes.nuevo'
 import { Route as AuthenticatedPacientesPatientIdIndexRouteImport } from './routes/_authenticated/pacientes.$patientId.index'
+import { Route as AuthenticatedPacientesPatientIdImprimirRouteImport } from './routes/_authenticated/pacientes.$patientId.imprimir'
+import { Route as AuthenticatedPacientesPatientIdAtencionEncounterIdRouteImport } from './routes/_authenticated/pacientes.$patientId.atencion.$encounterId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -48,20 +50,36 @@ const AuthenticatedPacientesPatientIdIndexRoute =
     path: '/pacientes/$patientId/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedPacientesPatientIdImprimirRoute =
+  AuthenticatedPacientesPatientIdImprimirRouteImport.update({
+    id: '/pacientes/$patientId/imprimir',
+    path: '/pacientes/$patientId/imprimir',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPacientesPatientIdAtencionEncounterIdRoute =
+  AuthenticatedPacientesPatientIdAtencionEncounterIdRouteImport.update({
+    id: '/pacientes/$patientId/atencion/$encounterId',
+    path: '/pacientes/$patientId/atencion/$encounterId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/pacientes/nuevo': typeof AuthenticatedPacientesNuevoRoute
   '/pacientes/': typeof AuthenticatedPacientesIndexRoute
+  '/pacientes/$patientId/imprimir': typeof AuthenticatedPacientesPatientIdImprimirRoute
   '/pacientes/$patientId/': typeof AuthenticatedPacientesPatientIdIndexRoute
+  '/pacientes/$patientId/atencion/$encounterId': typeof AuthenticatedPacientesPatientIdAtencionEncounterIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/pacientes/nuevo': typeof AuthenticatedPacientesNuevoRoute
   '/pacientes': typeof AuthenticatedPacientesIndexRoute
+  '/pacientes/$patientId/imprimir': typeof AuthenticatedPacientesPatientIdImprimirRoute
   '/pacientes/$patientId': typeof AuthenticatedPacientesPatientIdIndexRoute
+  '/pacientes/$patientId/atencion/$encounterId': typeof AuthenticatedPacientesPatientIdAtencionEncounterIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,7 +88,9 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/pacientes/nuevo': typeof AuthenticatedPacientesNuevoRoute
   '/_authenticated/pacientes/': typeof AuthenticatedPacientesIndexRoute
+  '/_authenticated/pacientes/$patientId/imprimir': typeof AuthenticatedPacientesPatientIdImprimirRoute
   '/_authenticated/pacientes/$patientId/': typeof AuthenticatedPacientesPatientIdIndexRoute
+  '/_authenticated/pacientes/$patientId/atencion/$encounterId': typeof AuthenticatedPacientesPatientIdAtencionEncounterIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -79,10 +99,18 @@ export interface FileRouteTypes {
     | '/auth'
     | '/pacientes/nuevo'
     | '/pacientes/'
+    | '/pacientes/$patientId/imprimir'
     | '/pacientes/$patientId/'
+    | '/pacientes/$patientId/atencion/$encounterId'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/auth' | '/pacientes/nuevo' | '/pacientes' | '/pacientes/$patientId'
+    | '/'
+    | '/auth'
+    | '/pacientes/nuevo'
+    | '/pacientes'
+    | '/pacientes/$patientId/imprimir'
+    | '/pacientes/$patientId'
+    | '/pacientes/$patientId/atencion/$encounterId'
   id:
     | '__root__'
     | '/'
@@ -90,7 +118,9 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/pacientes/nuevo'
     | '/_authenticated/pacientes/'
+    | '/_authenticated/pacientes/$patientId/imprimir'
     | '/_authenticated/pacientes/$patientId/'
+    | '/_authenticated/pacientes/$patientId/atencion/$encounterId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -143,20 +173,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPacientesPatientIdIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/pacientes/$patientId/imprimir': {
+      id: '/_authenticated/pacientes/$patientId/imprimir'
+      path: '/pacientes/$patientId/imprimir'
+      fullPath: '/pacientes/$patientId/imprimir'
+      preLoaderRoute: typeof AuthenticatedPacientesPatientIdImprimirRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pacientes/$patientId/atencion/$encounterId': {
+      id: '/_authenticated/pacientes/$patientId/atencion/$encounterId'
+      path: '/pacientes/$patientId/atencion/$encounterId'
+      fullPath: '/pacientes/$patientId/atencion/$encounterId'
+      preLoaderRoute: typeof AuthenticatedPacientesPatientIdAtencionEncounterIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedPacientesNuevoRoute: typeof AuthenticatedPacientesNuevoRoute
   AuthenticatedPacientesIndexRoute: typeof AuthenticatedPacientesIndexRoute
+  AuthenticatedPacientesPatientIdImprimirRoute: typeof AuthenticatedPacientesPatientIdImprimirRoute
   AuthenticatedPacientesPatientIdIndexRoute: typeof AuthenticatedPacientesPatientIdIndexRoute
+  AuthenticatedPacientesPatientIdAtencionEncounterIdRoute: typeof AuthenticatedPacientesPatientIdAtencionEncounterIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPacientesNuevoRoute: AuthenticatedPacientesNuevoRoute,
   AuthenticatedPacientesIndexRoute: AuthenticatedPacientesIndexRoute,
+  AuthenticatedPacientesPatientIdImprimirRoute:
+    AuthenticatedPacientesPatientIdImprimirRoute,
   AuthenticatedPacientesPatientIdIndexRoute:
     AuthenticatedPacientesPatientIdIndexRoute,
+  AuthenticatedPacientesPatientIdAtencionEncounterIdRoute:
+    AuthenticatedPacientesPatientIdAtencionEncounterIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
