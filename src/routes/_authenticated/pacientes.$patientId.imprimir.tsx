@@ -6,8 +6,8 @@ import { DOC_CODE, VITAL_ROWS, asVitals, calcAge, formatDate, type Encounter } f
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/pacientes/$patientId/imprimir")({
-  validateSearch: (s: Record<string, unknown>): { atencion?: string } => ({
-    atencion: typeof s.atencion === "string" ? s.atencion : undefined,
+  validateSearch: (s: Record<string, unknown>): { atencion?: string | undefined } => ({
+    atencion: typeof s["atencion"] === "string" ? s["atencion"] : undefined,
   }),
   head: () => ({ meta: [{ title: "Historia clínica para imprimir" }] }),
   component: PrintPage,

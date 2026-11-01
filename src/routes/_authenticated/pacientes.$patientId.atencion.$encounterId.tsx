@@ -43,7 +43,7 @@ function EncounterPage() {
     const { id: _i, owner_id: _o, created_at: _c, updated_at: _u, patient_id: _p, ...rest } = v!;
     const { error } = await supabase.from("encounters").update(rest).eq("id", encounterId);
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries({ queryKey: ["encounters", patientId] });
     qc.invalidateQueries({ queryKey: ["encounter", encounterId] });
     toast.success("Sesión guardada");
