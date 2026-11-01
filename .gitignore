@@ -30,3 +30,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Respaldos de base de datos y archivos sensibles
+/respaldo_lovable/
+*.backup
+*.backup.zip
+
+# Variables de entorno y secretos
+.env
+.env.*
+!.env.example
