@@ -46,14 +46,33 @@ function createSupabaseFetch(supabaseUrl: string, supabaseKey: string): typeof f
 }
 
 
+type SupabaseRuntimeConfig = {
+  url: string;
+  key: string;
+};
+declare global {
+  interface Window {
+    __CARESTORY_SUPABASE_CONFIG__?: SupabaseRuntimeConfig;
+  }
+}
+
+let _supabase: ReturnType<typeof createSupabaseClient> | undefined;
+
 function createSupabaseClient() {
   // Use import.meta.env for client-side (Vite build-time replacement)
   // Fall back to process.env for SSR (server-side rendering)
+  const browserConfig =
+    typeof window !== 'undefined'
+      ? window.__CARESTORY_SUPABASE_CONFIG__
+      : undefined;
+
   const SUPABASE_URL =
+    browserConfig?.url ||
     import.meta.env.VITE_SUPABASE_URL ||
     (typeof process !== 'undefined' ? process.env['SUPABASE_URL'] : undefined);
 
   const SUPABASE_PUBLISHABLE_KEY =
+    browserConfig?.key ||
     import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
     (typeof process !== 'undefined' ? process.env['SUPABASE_PUBLISHABLE_KEY'] : undefined);
 
@@ -78,8 +97,6 @@ function createSupabaseClient() {
     },
   });
 }
-
-let _supabase: ReturnType<typeof createSupabaseClient> | undefined;
 
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";

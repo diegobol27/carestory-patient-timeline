@@ -43,13 +43,47 @@ function isH3SwallowedErrorBody(body: string): boolean {
     return false;
   }
 }
+async function injectSupabaseRuntimeConfig(response: Response): Promise<Response> {
+  const contentType = response.headers.get("content-type") ?? "";
+  if (!contentType.includes("text/html") || !response.ok) return response;
 
+  const url = process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_PUBLISHABLE_KEY;
+
+  if (!url || !key || !key.startsWith("sb_publishable_")) {
+    console.error("[CareStory] Faltan las variables públicas de Supabase en el servidor.");
+    return response;
+  }
+
+  const config = JSON.stringify({ url, key }).replace(/</g, "\\u003c");
+  const script = `<script>window.__CARESTORY_SUPABASE_CONFIG__=${config};</script>`;
+  const html = await response.text();
+
+  if (!html.includes("</head>")) {
+    console.error("[CareStory] No se encontró el cierre del encabezado HTML.");
+    return new Response(html, response);
+  }
+
+  const headers = new Headers(response.headers);
+  headers.delete("content-length");
+  headers.delete("content-encoding");
+  headers.delete("etag");
+  headers.delete("content-md5");
+  headers.set("cache-control", "no-store");
+
+  return new Response(html.replace("</head>", `${script}</head>`), {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      const normalizedResponse = await normalizeCatastrophicSsrResponse(response);
+      return await injectSupabaseRuntimeConfig(normalizedResponse);
     } catch (error) {
       console.error(error);
       return new Response(renderErrorPage(), {
