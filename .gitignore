@@ -41,3 +41,5 @@ dist-ssr
 .env.*
 !.env.example
 *.respaldo
+# Supabase CLI: archivos temporales locales
+supabase/.temp/
