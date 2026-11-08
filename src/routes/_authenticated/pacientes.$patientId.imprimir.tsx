@@ -119,8 +119,14 @@ function PrintPage() {
         </tbody></table>
         {list.length === 0 && <p className="mt-6 text-sm">Sin atenciones registradas.</p>}
         {list.map((e) => <EncounterBlock key={e.id} e={e} />)}
-        <footer className="mt-8 border-t pt-2 text-center text-[10px] text-muted-foreground">
-          Información sujeta a reserva legal (Ley 23 de 1981, Res. 1995 de 1999, Ley 1581 de 2012, Ley 2015 de 2020). Prohibida su divulgación sin autorización del paciente.
+        <footer className="print-avoid mt-8 flex items-end justify-between gap-6 border-t pt-3 text-[10px] text-muted-foreground">
+          <p className="max-w-xl text-left">
+            Información sujeta a reserva legal (Ley 23 de 1981, Res. 1995 de 1999, Ley 1581 de 2012, Ley 2015 de 2020). Prohibida su divulgación sin autorización del paciente.
+          </p>
+          <a href="https://pivok.com.co" target="_blank" rel="noopener noreferrer" className="flex shrink-0 flex-col items-end gap-1 text-muted-foreground no-underline">
+            <img src="/logo-pivok.png" alt="PivoK" width={110} height={37} loading="eager" className="h-auto w-[110px]" />
+            <span>Desarrollado por Pivok.com.co</span>
+          </a>
         </footer>
       </article>
     </div>
